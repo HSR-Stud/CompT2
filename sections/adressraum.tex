@@ -1,0 +1,28 @@
+\section{Adressraum}
+\begin{itemize}
+  \item Bussystem: Verbindet die Komponenten
+  	\begin{itemize}
+  		\item CPU: Control Unit, Processing Unit
+  			\begin{itemize}
+  				\item Init Phase: CPU-Startup
+  				\item Infinite Loop: "`fetch-execute"'-Cycle
+			\end{itemize}
+  		\item Memory: Programm, Daten
+  		\item I/O: Inptut/Output
+	\end{itemize}
+  \item Komponenten eines Prozessor-Bussystem:
+  	\begin{itemize}
+  		\item Adress Bus: Uni-Direktional, Bestimmt maximal adressierbarer Speicher
+  		\item Data Bus: Bi-Direktional, Überträgt Daten zwischen CPU und Memory
+  		\item Control Bus: Überträgt Timing- und andere Steuer-Signale von der CPU an die I/O-Geräte
+	\end{itemize}
+\end{itemize}
+
+\subsection{Stack}
+Der Stack wächst immer von der höchsten Adresse zur tiefsten Adresse hin, der Stackpointer zeigt immer auf den obersten Eintrag im Stack (Top of Stack \textbf{ToS}).
+Der Stack ist ein typischer \textbf{last-in first-out (LIFO)} Speicher. \\
+\begin{tabular}{lll|l}
+	\textbf{Push}	& move.w	& source, -(SP)			& siehe auch \textbf{movem}: push/pull list of registers \\
+	\textbf{Pull}	& move.w	& (SP)+, destination	& movem.l \quad a1-a4/a6/d0-d3, -(a7)
+\end{tabular}
+
