@@ -1,0 +1,29 @@
+\section{Serial Input/Output}
+\subsection{Datenübermittlung}
+Digitale Signale lassen sich sehr schlecht auf analogen Leitungen übertragen, daher werden die Signale auf einen Träger moduliert.
+\begin{itemize}
+  \item Amplituden Modulation (AM)
+  \item Frequenz Modulation (FM)
+  \item Phasen Modulation (PM)
+\end{itemize}
+
+Der Übertragungskanal kann verschieden aufgebaut sein, man unterscheidet:
+\begin{itemize}
+  \item \textbf{Simplex:} Nur eine Leitung. Nur einer kann senden, der andere kann nur empfangen.
+  \item \textbf{Halb-Duplex:} Eine Leitung, aber beide können senden und empfangen, jedoch nicht zur gleichen Zeit
+  \item \textbf{Voll-Duplex:} Zwei Leitungen, beide können jederzeit senden und empfangen.
+\end{itemize}
+
+\subsubsection{Übertragungsgeschwidigkeit}
+\begin{itemize}
+  \item \textbf{Baud Rate: (Baud)} Anzahl Zustände pro Sekunde
+  \item \textbf{Bits pro Sekunde: (BPS)} Anzahl Informationen welche pro Sekunde übermittelt werden können
+\end{itemize}
+Baud und BPS sind nicht dasselbe! Für ein binäres zwei-Level Signal mit der Datenrate 1 BPS ist die Baud 1.
+Ein Signal mit 16 diskreten Level kann pro Zustand 4 ($16=2^4$) Bit übermitteln. Bei einer Baud von 1200 sind das also 4800 BPS! 
+
+\subsection{Asynchrone vs. Synchrone Übermittlung}
+\begin{tabular}{ll}
+	\textbf{Asynchron:}	& Jedes übermittelte Zeichen hat framing bits, welche den Beginn und das Ende markieren \\
+	\textbf{Synchron:}	& Es werden Datenblöcke übermittelt, welche von framing	bits umgeben sind.
+\end{tabular}
