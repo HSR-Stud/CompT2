@@ -1,0 +1,128 @@
+\section{Assembler und C}
+\subsection{Prinzipien des Datenaustausch}
+\begin{itemize}
+  \item Wenn kein Informationsaustausch notwendig ist:
+  	\begin{itemize}
+  		\item Kein Datenaustausch zwischen Aufrufer und Subroutine
+  		\item Alle lokal modifizierten Register sollten erhalten bleiben
+	\end{itemize}
+  \item Wenn Informationsaustausch notwendig ist:
+  	\begin{itemize}
+  		\item Klares Konzept zur Übergabe der Daten muss festgelegt werden
+  		\item Alle lokal modifizierten Register sollten erhalten bleiben
+	\end{itemize}
+\end{itemize}
+
+
+\subsubsection{Datenaustausch via Register}
+\begin{itemize}
+  \item Aufrufer legt Parameter in die gemeinsamen Register
+  \item Subroutine holt sich die Parameter von den Register
+  \item Resultate werden wider in die Register abgelegt
+\end{itemize}
+\begin{tabular}{l|l}
+	\textbf{Vorteile} 	& \textbf{Nachteile} \\
+	\hline
+	schnell				& Anzahl Parameter limitiert \\
+	kleiner Overhead	& Parameter und Register müssen klar definiert werden \\
+						& nicht ablaufinvariant \\ 
+						& parallele Interupts sind gefährlich
+\end{tabular}
+
+
+\subsubsection{Datenaustausch via Register-Windowing}
+\begin{itemize}
+  \item Aufrufer legt Parameter in sein output register-window
+  \item Subroutine holt sich die Parameter von seinem input register-window
+  \item Resultate werden in das input register-window abgelegt
+\end{itemize}
+\begin{tabular}{l|l}
+	\textbf{Vorteile} 	& \textbf{Nachteile} \\
+	\hline
+	schnell				& Anzahl Parameter limitiert auf die grösse des register window \\
+	kleiner Overhead	& Parameter und Register müssen klar definiert werden \\
+						& Level der Subroutine Aufrufe ist beschränkt (bei Rekursion) \\
+						& eventuell nicht ablaufinvariant \\ 
+						& parallele Interupts sind gefährlich \\
+						& Register-Windowing selten unterstützt
+\end{tabular}
+
+
+\subsubsection{Datenaustausch via globalen Speicher}
+\begin{itemize}
+  \item Aufrufer legt Parameter in den globalen Speicher
+  \item Subroutine holt Parameter vom globalen Speicher
+  \item Resultate werden in den globalen Speicher gelegt
+\end{itemize}
+\begin{tabular}{l|l}
+	\textbf{Vorteile} 	& \textbf{Nachteile} \\
+	\hline
+	virtuell unlimitierte Anzahl Parameter	& Parameterstruktur muss klar definiert werden \\
+											& Overhead durch schreiben/lesen der Parameter \\
+											& globale Variablen sind gefährlich \\
+											& nicht ablaufinvariant
+\end{tabular}
+
+
+\subsubsection{Datenaustausch via Stack}
+\begin{itemize}
+  \item Aufrufer und Subroutine legen/holen sich die Parameter vom Stack
+  \item Aufrufer und Subroutine müssen die Reihenfolge und das Format der Parameter einhalten
+  \item \textbf{Achtung:} Alle Parameter müssen wieder vom Stack entfernt werden!
+\end{itemize}
+\begin{tabular}{l|l}
+	\textbf{Vorteile} 	& \textbf{Nachteile} \\
+	\hline
+	virtuell unlimitierte Anzahl Parameter	& eventuell schwieriger zum verstehen \\
+	ablaufinvariant, Rekursion möglich 		& \\
+	klar und strukturiert					&
+\end{tabular}
+
+
+\subsection{Mechanismen für die Parameterübergabe}
+\begin{itemize}
+  \item \textbf{by Value:}
+  	\begin{itemize}
+  		\item Die Subroutine erhält eine Kopie der Originaldaten
+  		\item Modifikation der Daten ändert die Originaldaten nicht
+	\end{itemize}
+  \item \textbf{by Reference:}
+  	\begin{itemize}
+  		\item Die Subroutine erhält ein Pointer auf die Daten
+  		\item Die Daten werden nicht kopiert, änderungen der Daten in der Subroutine bleiben erhalten
+	\end{itemize}
+  \item \textbf{Return Values}
+  	\begin{itemize}
+  		\item via vorbestimmtes Datenregister
+  		\item \textbf{MC68'000:} Typischerweise wird das Datenregister D0 für den Rückgabewert verwendet.
+	\end{itemize}
+\end{itemize}
+
+
+\subsection{Lokale Variablen und Stack Frames}
+Eine Subroutine braucht eventuell einen bestimmten Speicher um lokale Variablen zu speichern. Für diesen Speicher gibt es zwei Möglichkeiten: \\
+\textbf{Statische Allokation}
+\begin{itemize}
+  \item Fixer Adressraum für die lokalen Variablen
+  \item Funktioniert nur wenn die Subroutine nicht ablaufinvariant und nicht rekursiv ist
+\end{itemize}
+\textbf{Dynamische Allokation}
+\begin{itemize}
+  \item Variablen auf den Stack ablegen
+  \item Mit den Instruktionen \verb+LINK+ und \verb+UNLK+ kann ein Stack Frame, eine temporäre Region auf dem Stack angelegt werden
+  \item Das Stack Frame wird für jeden Aufruf der Subroutine neu angelegt, somit ist Rekursion möglich
+  \item Das Stack Frame ist über einen \textbf{Frame Pointer} erreichbar
+\end{itemize}
+
+
+\subsubsection{LINK und UNLK Instruktion}
+\begin{tabular}{l|l}
+	\verb+LINK+											& \verb+UNLK+ \\
+	Stack Frame erstellen								& Stack Frame löschen \\
+	\hline
+	\verb+LINK A6,#-16+									& \verb+UNLK A6+ \\
+	Stack Pointer um 4 verkleinern						& Inhalt von A6 in den Stack Pointer laden \\
+	Inhalt der Adresse von Register A6 auf den Stack	& Den alten Wert von A6 in A6 abspeichern \\
+	Stack Pointer in A6 ablegen							& Stack Pointer um 4 erhöhen \\
+	Stack Pointer um 16 Adressen erhöhen				& 
+\end{tabular}
