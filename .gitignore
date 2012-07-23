@@ -1,3 +1,4 @@
 tmp/*
 *.synctex
+*.synctex.gz
 CompT2.pdf
