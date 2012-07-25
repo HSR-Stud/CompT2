@@ -2,3 +2,5 @@ tmp/*
 *.synctex
 *.synctex.gz
 CompT2.pdf
+*.log
+*.aux
