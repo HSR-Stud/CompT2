@@ -4,3 +4,5 @@ tmp/*
 CompT2.pdf
 *.log
 *.aux
+*.out
+*.toc
