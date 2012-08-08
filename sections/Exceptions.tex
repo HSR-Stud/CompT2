@@ -3,9 +3,14 @@
 Eine \textbf{Exception} ist ein Aufruf auf das Betriebssystem und ist einer Subroutine sehr ähnlich. 
 \textbf{Interrupts} sind Hardware-Exceptions welche von einem externen Gerät ausgelöst werden.
 Jede \textbf{Exception} hat einen \textbf{Exception Handler} welcher richtig auf die Exception reagiert.
-
+\subsection{Prioritäten}
+\begin{itemize}
+	\item $IRQ_i$ Je grösser i desto höher die Priorität
+	\item Eine ISR tieferer Priorität kann nur von einem IRQ höherer Priorität unterbrochen werden
+	\item Eine ISR kann nicht von einem IRQ gleicher oder tieferer Priorität unterbrochen werden
+\end{itemize}
 \subsection{Aufruf}
-Eine Exceptions darf nicht wie eine normale Funktion aufgerufen werden, da sie einen anderen Rücksprungbefehl (RTE anstelle RTS) verwendet.
+Eine Exceptions darf nicht wie eine normale Funktion aufgerufen werden, da sie einen anderen Rücksprungbefehl (RTE anstelle RTS) verwendet, welcher auch das Statusregister vom Stack holt.
 
 \subsection{Deklaration in C}
 
