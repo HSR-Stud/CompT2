@@ -4,7 +4,28 @@ Eine \textbf{Exception} ist ein Aufruf auf das Betriebssystem und ist einer Subr
 \textbf{Interrupts} sind Hardware-Exceptions welche von einem externen Gerät ausgelöst werden.
 Jede \textbf{Exception} hat einen \textbf{Exception Handler} welcher richtig auf die Exception reagiert.
 
-\textbf{Beispiele für Exceptions:} 
+\subsection{Aufruf}
+Eine Exceptions darf nicht wie eine normale Funktion aufgerufen werden, da sie einen anderen Rücksprungbefehl (RTE anstelle RTS) verwendet.
+
+\subsection{Deklaration in C}
+
+\begin{lstlisting}[language=C]
+#define exc_vector(x) (*(void (**)(void))((x) * 4)) /* Adresse aus Index berechnen */
+#define DIV0_VECNO 5                     /* Index von der Exception Vector Assignment */
+
+#pragma interrupt
+void exception_routine(void)
+{
+...
+}
+#pragma endinterrupt
+
+exc_vector(DIV0_VECNO)=exception_routine; /* Vektortabelleneintrag setzen exc_div0 ist ein funktionsname*/
+\end{lstlisting}
+
+\subsection{Beispiele} 
 \begin{itemize}
   \item bus error, adress error, division durch Null, Rechteverletzung
+  \item soft interrupts z.B. für Systemcalls
 \end{itemize}
+
