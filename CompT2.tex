@@ -3,9 +3,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\titleinfo}{Computertechnik 2 - Formelsammlung}
 \newcommand{\authorinfo}{J.Rast}
-\newcommand{\versioninfo}{$Revision: 991$}
+\newcommand{\versioninfo}{$Revision: Curiosity$}
 
 \include{header/header}
+
+\usepackage{enumitem}
+\setlist{noitemsep,topsep=1pt,parsep=1pt,partopsep=1pt}
 
 %listing setting for asm code
 \lstset{
@@ -22,9 +25,6 @@
 
 
 \begin{document}
-\tableofcontents
-\newpage
-
 \input{sections/adressraum}
 \input{sections/subroutines}
 \input{sections/ProgrammStrukturen}
