@@ -7,12 +7,10 @@ Subroutinen stellen das gleiche dar wie Funktionsaufrufe in höheren Sprachen. S
 \textbf{Achtung:} Eine Subroutine sollte nicht versuchen den "`Return-Pointer"' zu verändern. Dies führt zu Problemen wenn die Subroutine anders aufgerufen wird.
 
 Normalerweise wird das Condition Code Register (CCR) durch die Subroutine beeinflusst. Möchte man das nicht kann das CCR auf dem Stack abgelegt werden und am Schluss wieder hergestellt werden: \\
-\begin{tabular}{llll}
-	& . & & \\
-	& BSR & GET\_DATA & \\
-	& . & & \\
-	GET\_DATA & MOVE.W & CCR,-(A7) & CCR auf den Stack legen \\
-	& . & & \\
-	& RTR & & CCR zurückschreiben und Subroutine verlassen
-\end{tabular}
+\begin{lstlisting}
+	  BSR GET_DATA
+	GET_DATA: 
+	  MOVE.W CCR,-(A7)  *CCR auf den Stack legen
+	  RTR CCR           *zurueckschreiben und Subroutine verlassen
+\end{lstlisting}
 
