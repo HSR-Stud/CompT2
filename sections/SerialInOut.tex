@@ -21,7 +21,9 @@ Ein Signal mit 16 diskreten Level kann pro Zustand 4 ($16=2^4$) Bit übermitteln
   \begin{itemize}
     \item Das Paritätsbit bewirkt, dass bei gerader („EVEN“) Parität immer eine
     gerade bzw. bei ungerader („ODD“) Parität eine ungerade Anzahl von „1“-Bits übertragen wird. Es gibt also die Möglichkeiten „E“ wie even parity oder „O“ wie odd parity oder kein Parity-Bit entsprechend „N“ wie no parity. Weiterhin kann das Paritätsbit immer gesetzt („M“ wie mark parity) oder immer gelöscht („S“ wie space parity) sein. Abgeschlossen wird die Übertragung mit ein oder zwei Stoppbits logisch „1“
-    \item Das LSB wird zuerst geschickt
+    \item Das LSB first
+    \item Start - Daten - Stopp = Frame
+    \item Asynchrone Datenübertragung! 
   \end{itemize}
 \subsubsection{Datenleitungen}
 \begin{tabular}{|l|l|p{12cm}|}

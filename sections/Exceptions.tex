@@ -3,6 +3,11 @@
 Eine \textbf{Exception} ist ein Aufruf auf das Betriebssystem und ist einer Subroutine sehr ähnlich. 
 \textbf{Interrupts} sind Hardware-Exceptions welche von einem externen Gerät ausgelöst werden.
 Jede \textbf{Exception} hat einen \textbf{Exception Handler} welcher richtig auf die Exception reagiert.
+\subsection{Wozu?}
+Um HW/SW-Ereignisse an die SW zu signalisieren und innerhalb des normalen
+Programmablaufs zu verarbeiten.\\
+Zum Aufruf von Subroutinen ohne Kenntnis der Startadresse\\
+Interne/Externe Fehler mittels SW zu behandeln.\\
 \subsection{Prioritäten}
 \begin{itemize}
 	\item $IRQ_i$ Je grösser i desto höher die Priorität
@@ -11,7 +16,16 @@ Jede \textbf{Exception} hat einen \textbf{Exception Handler} welcher richtig auf
 \end{itemize}
 \subsection{Aufruf}
 Eine Exceptions darf nicht wie eine normale Funktion aufgerufen werden, da sie einen anderen Rücksprungbefehl (RTE anstelle RTS) verwendet, welcher auch das Statusregister vom Stack holt.
-
+An der Vektoradresse liegt die Adresse der aufzurufenden Subroutine.\\
+Vektoradresse = 4xVektornummer = Vektortabelle (0x000000 bis 0x0003FF)
+-Startadresse-Offset\\
+\subsection{Exception Routine}
+\begin{itemize}
+  \item Hat keine explizite Adresse, sondern vector
+  \item speichern diverse Register to supervisor stack (siehe Karte)
+  \item s-Bit = 1
+  \item Rücksprung mit RTE nicht mit RTS
+\end{itemize}
 \subsection{Deklaration in C}
 
 \begin{lstlisting}[language=C]

@@ -77,7 +77,9 @@ Eine Subroutine braucht eventuell einen bestimmten Speicher um lokale Variablen 
   \item Variablen auf den Stack ablegen
   \item Mit den Instruktionen \verb+LINK+ und \verb+UNLK+ kann ein Stack Frame, eine temporäre Region auf dem Stack angelegt werden
   \item Das Stack Frame wird für jeden Aufruf der Subroutine neu angelegt, somit ist Rekursion möglich
-  \item Das Stack Frame ist über einen \textbf{Frame Pointer} erreichbar
+  \item Das Stack Frame ist über einen \textbf{Frame Pointer} erreichbar,
+  welcher auf den "`Boden"' des Frames zeigt
+  \item Static Variabeln sind IMMER ausserhalb des frames! 
 \end{itemize}
 
 
