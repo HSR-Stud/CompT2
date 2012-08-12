@@ -16,7 +16,7 @@ Eine Exceptions darf nicht wie eine normale Funktion aufgerufen werden, da sie e
 
 \begin{lstlisting}[language=C]
 #define exc_vector(x) (*(void (**)(void))((x) * 4)) /* Adresse aus Index berechnen */
-#define DIV0_VECNO 5                     /* Index von der Exception Vector Assignment */
+#define DIV0_VECNO 5                                /* Index von der Exception Vector Assignment */
 
 #pragma interrupt
 void exception_routine(void)
@@ -29,6 +29,33 @@ exc_vector(DIV0_VECNO)=exception_routine; /* Vektortabelleneintrag setzen exc_di
 \end{lstlisting}
 
 \subsection{Beispiele} 
+
+\subsubsection{Exception Routine für Software-Interrupt trap \#3}
+
+\begin{lstlisting}[language=C]
+#define TRAP3_VECNO (32+3)
+
+int error;                                          /*globale Variable fier Zugriff aus Exception Routine*/
+typedef void (*t_funcptr)();                        /* "t_funcptr" ist ein Zeiger auf eine Funktion */
+
+t_funcptr *p_vector_trap3 = (t_funcptr *)(4 * TRAP3_VECNO);
+
+#pragma interrupt
+
+void exc_trap3 (void)
+{
+	ANZEIGE=(unsigned char)error;
+}
+#pragma endinterrupt
+
+/* Im Hauptprogramm: Vektor in Tabelle eintragen */
+	*p_vector_trap3 = exc_trap3;
+
+/* Aufruf z.B. mit folgender Sequenz: */
+	error = 0x18;
+	asm("trap #3");
+\end{lstlisting}
+
 \begin{itemize}
   \item bus error, adress error, division durch Null, Rechteverletzung
   \item soft interrupts z.B. für Systemcalls
