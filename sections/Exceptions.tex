@@ -73,6 +73,25 @@ void exc_trap3 (void)
 	asm("trap #3");
 \end{lstlisting}
 
+
+\subsubsection{Exception Routine für Vektor-Nr.8}
+Die Routine legt die unerlaubte Instruktion ( Privilege Violation) auf Adress
+0x0040 0804 ab, und springt so zurück, dass die unerlaubte Instruktion nicht mer
+ausgeführt wird (unerlaubte Instruktion 2Byte lang)
+\begin{lstlisting}
+ill_ex: 
+        move.l  a0,sp@-       *Register a0 auf Stack sichern
+        move.l  sp@(6),a0     *Statt movea kann man immer move schreiben
+                              *auf dem Stack deponiert werden (Offset dann +6)
+        move.w  a0@,0x400804  *unerlaubte Instruktion sichern
+        move.l  sp@+,a0       *Gesichertes a0 zurueckholen vom Stack
+        addq.l  #2,sp@(2)     *unerlaubte Instruktion nicht mehr ausfuehren
+        rte                   *Return from Exception
+        
+*Initialisierung der ill_ex: Vektornummer 8
+        move.l  #ill_ex,4*8
+        
+\end{lstlisting}
 \begin{itemize}
   \item bus error, adress error, division durch Null, Rechteverletzung
   \item soft interrupts z.B. für Systemcalls
