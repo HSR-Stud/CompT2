@@ -7,18 +7,21 @@ Jede \textbf{Exception} hat einen \textbf{Exception Handler} welcher richtig auf
 Um HW/SW-Ereignisse an die SW zu signalisieren und innerhalb des normalen
 Programmablaufs zu verarbeiten.\\
 Zum Aufruf von Subroutinen ohne Kenntnis der Startadresse\\
-Interne/Externe Fehler mittels SW zu behandeln.\\
+Interne/Externe Fehler mittels SW zu behandeln.
 \subsection{Prioritäten}
+Die Prioritäten der Exceptions und Interrupts sieht man in ``Exception Grouping and Priority'' in
+der Prog. Rev. Card. Bei den Autovectored Interrupts schaut man in der Tabelle ``Interrupt
+Encoding''. Ausserdem gelten die folgenden Regeln:
 \begin{itemize}
 	\item $IRQ_i$ Je grösser i desto höher die Priorität
 	\item Eine ISR tieferer Priorität kann nur von einem IRQ höherer Priorität unterbrochen werden
 	\item Eine ISR kann nicht von einem IRQ gleicher oder tieferer Priorität unterbrochen werden
 \end{itemize}
 \subsection{Aufruf}
-Eine Exceptions darf nicht wie eine normale Funktion aufgerufen werden, da sie einen anderen Rücksprungbefehl (RTE anstelle RTS) verwendet, welcher auch das Statusregister vom Stack holt.
+Eine Exceptions darf nicht wie eine normale Funktion aufgerufen werden, da sie einen anderen
+Rücksprungbefehl (RTE anstelle RTS) verwendet, welcher auch das Statusregister vom Stack holt.
 An der Vektoradresse liegt die Adresse der aufzurufenden Subroutine.\\
-Vektoradresse = 4xVektornummer = Vektortabelle (0x000000 bis 0x0003FF)
--Startadresse-Offset\\
+Vektoradresse = 4xVektornummer = Vektortabelle (0x000000 bis 0x0003FF) - Startadresse-Offset
 \subsection{Exception Routine}
 \begin{itemize}
   \item Hat keine explizite Adresse, sondern vector
@@ -26,8 +29,8 @@ Vektoradresse = 4xVektornummer = Vektortabelle (0x000000 bis 0x0003FF)
   \item s-Bit = 1
   \item Rücksprung mit RTE nicht mit RTS
 \end{itemize}
-\subsection{Deklaration in C}
 
+\subsection{Deklaration in C}
 \begin{lstlisting}[language=C]
 #define exc_vector(x) (*(void (**)(void))((x) * 4)) /* Adresse aus Index berechnen */
 #define DIV0_VECNO 5                                /* Index von der Exception Vector Assignment */
