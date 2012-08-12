@@ -1,18 +1,5 @@
 \section{Assembler und C}
 \subsection{Prinzipien des Datenaustausch}
-\begin{itemize}
-  \item Wenn kein Informationsaustausch notwendig ist:
-  	\begin{itemize}
-  		\item Kein Datenaustausch zwischen Aufrufer und Subroutine
-  		\item Alle lokal modifizierten Register sollten erhalten bleiben
-	\end{itemize}
-  \item Wenn Informationsaustausch notwendig ist:
-  	\begin{itemize}
-  		\item Klares Konzept zur Übergabe der Daten muss festgelegt werden
-  		\item Alle lokal modifizierten Register sollten erhalten bleiben
-	\end{itemize}
-\end{itemize}
-
 
 \subsubsection{Datenaustausch via Register}
 \begin{itemize}
@@ -77,27 +64,6 @@
 	ablaufinvariant, Rekursion möglich 		& \\
 	klar und strukturiert					&
 \end{tabular}
-
-
-\subsection{Mechanismen für die Parameterübergabe}
-\begin{itemize}
-  \item \textbf{by Value:}
-  	\begin{itemize}
-  		\item Die Subroutine erhält eine Kopie der Originaldaten
-  		\item Modifikation der Daten ändert die Originaldaten nicht
-	\end{itemize}
-  \item \textbf{by Reference:}
-  	\begin{itemize}
-  		\item Die Subroutine erhält ein Pointer auf die Daten
-  		\item Die Daten werden nicht kopiert, änderungen der Daten in der Subroutine bleiben erhalten
-	\end{itemize}
-  \item \textbf{Return Values}
-  	\begin{itemize}
-  		\item via vorbestimmtes Datenregister
-  		\item \textbf{MC68'000:} Typischerweise wird das Datenregister D0 für den Rückgabewert verwendet.
-	\end{itemize}
-\end{itemize}
-
 
 \subsection{Lokale Variablen und Stack Frames}
 Eine Subroutine braucht eventuell einen bestimmten Speicher um lokale Variablen zu speichern. Für diesen Speicher gibt es zwei Möglichkeiten: \\
